@@ -51,3 +51,6 @@ coverage/
 
 # Entity Framework Migrations
 Migrations/
+
+
+*.db

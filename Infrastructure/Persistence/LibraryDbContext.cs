@@ -3,7 +3,7 @@ namespace Infrastructure.Persistence
     using Microsoft.EntityFrameworkCore;
     using Domain.Entities;
 
-    public class LibraryDbContext(DbContextOptions<LibraryDbContext> options) : DbContext(options), DbContext
+    public class LibraryDbContext(DbContextOptions<LibraryDbContext> options) : DbContext(options)
     {
         public DbSet<Book> Books => Set<Book>();
         public DbSet<User> Users => Set<User>();

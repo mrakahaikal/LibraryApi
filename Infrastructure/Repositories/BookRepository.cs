@@ -47,12 +47,12 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task FindByTitleAsync(string title)
-        {
-            return await _context.Books
-                .Include(b => b.Category)
-                .Include(b => b.Author)
-                .ToListAsync(b => b.Title == title);
-        }
+        // public async Task FindByTitleAsync(string title)
+        // {
+        //     return await _context.Books
+        //         .Include(b => b.Category)
+        //         .Include(b => b.Author)
+        //         .ToListAsync(b => b.Title == title);
+        // }
     }
 }
