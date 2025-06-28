@@ -5,6 +5,8 @@ using Domain.Entities;
 
 namespace Web.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class LoansController(LoanService service) : ControllerBase
     {
         private readonly LoanService _service = service;
@@ -28,10 +30,25 @@ namespace Web.Controllers
                 await _service.CreateAsync(request);
                 return Ok(new { message = "Peminjaman berhasil disimpan." });
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(new {error = ex.Message});
+                return BadRequest(new { error = ex.Message });
             }
         }
+
+        [HttpPut("{id}/return")]
+        public async Task<IActionResult> Return(Guid id)
+        {
+            try
+            {
+                await _service.ReturnLoanAsync(id);
+                return Ok(new { message = "Peminjaman berhasil dikembalikan." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
     }
 }

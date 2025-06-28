@@ -50,5 +50,29 @@ namespace Application.Services
                 await _loanRepo.AddAsync(loan);
             }
         }
+
+        public async Task ReturnLoanAsync(Guid loanId)
+        {
+            var loan = await _loanRepo.GetByIdAsync(loanId) ?? throw new Exception("Data peminjaman tidak ditemukan.");
+
+            if (loan.IsReturned)
+                throw new Exception("Peminjaman sudah dikembalikan sebelumnya.");
+
+            loan.IsReturned = true;
+            loan.ReturnDate = DateTime.UtcNow;
+
+            // Kembalikan stok buku
+            foreach (var detail in loan.LoanDetails!)
+            {
+                if (detail.Book is null)
+                    continue;
+
+                detail.Book.Stock += detail.Quantity;
+                await _bookRepo.UpdateAsync(detail.Book);
+            }
+
+            await _loanRepo.UpdateAsync(loan);
+        }
+
     }
 }

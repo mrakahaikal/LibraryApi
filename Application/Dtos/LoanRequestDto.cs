@@ -4,7 +4,7 @@ namespace Application.Dtos
     {
         public Guid UserId { get; set; }
         public DateTime DueDate { get; set; }
-        public List<LoanBookDto> Books { get; set; }
+        public List<LoanBookDto> Books { get; set; } = new();
     }
 
     public class LoanBookDto
