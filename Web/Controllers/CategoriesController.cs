@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Mvc;
+using Application.Services;
+using Domain.Entities;
+
 namespace Web.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
-    using Application.Services;
-    using Domain.Entities;
-
     [ApiController]
     [Route("api/[controller]")]
     public class CategoriesController(CategoryService service) : ControllerBase

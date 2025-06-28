@@ -54,3 +54,5 @@ Migrations/
 
 
 *.db
+*.db-wal
+*.db-shm
