@@ -1,5 +1,13 @@
 namespace Domain.Entities;
 
+public enum Role
+{
+    Admin,
+    Librarian,
+    Member,
+    Guest
+}
+
 public class User
 {
     public Guid Id { get; set; }
@@ -7,9 +15,9 @@ public class User
     public required string LastName { get; set; }
     public required string Email { get; set; }
     public required string PasswordHash { get; set; }
-    public enum Role { get, set, }
+    public Role Role { get; set; }
     public bool IsActive { get; set; }
-    public required string CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public ICollection<Loan>? Loans { get; set; }
 }

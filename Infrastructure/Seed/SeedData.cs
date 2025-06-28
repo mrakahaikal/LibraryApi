@@ -29,6 +29,7 @@ namespace Infrastructure.Seed
                 Title = "Hujan",
                 AuthorId = author.Id,
                 CategoryId = category.Id,
+                Publisher = "Gramedia",
                 Stock = 5,
                 IsReferenceOnly = false
             };

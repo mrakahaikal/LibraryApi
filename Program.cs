@@ -1,12 +1,17 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Infrastructure.Persistence;
+using Infrastructure.Seed;
 using Infrastructure.Repositories;
 using Application.Services;
 using Domain.Interfaces;
+using Domain.Entities;
+using System.Text.Json.Serialization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +30,11 @@ builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<AuthorService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<UserService>();
+
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
 
 
 // 🌐 Add services to the container.
@@ -34,6 +44,7 @@ builder.Services.AddControllers()
     {
         opt.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
         opt.JsonSerializerOptions.WriteIndented = true;
+        opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
 // 👷 Build the app
@@ -56,7 +67,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
     db.Database.EnsureCreated();
-    // SeedData.Initialize(db);
+    SeedData.Initialize(db);
 }
 
 app.Run();
