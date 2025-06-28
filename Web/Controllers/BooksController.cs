@@ -26,9 +26,13 @@ namespace Web.Controllers
             return Ok(books);
         }
 
-        // POST: api/books
+        /**
+        POST: api/books
+        Create new book asynchronously
+        @params = Domain\Entities\Book book
+        */ 
         [HttpPost]
-        public async Task<IActionResult> Create(Book book)
+        public async Task<IActionResult> Create([FromBody] Book book)
         {
             await _service.AddAsync(book);
             return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
@@ -36,7 +40,7 @@ namespace Web.Controllers
 
         // PUT: api/books/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, Book book)
+        public async Task<IActionResult> Update(Guid id, [FromBody] Book book)
         {
             if (id != book.Id)
                 return BadRequest("ID mismatch");

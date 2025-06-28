@@ -1,19 +1,31 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
-using Infrastructure.Seed;
-using Domain.Interfaces;
 using Application.Services;
-using Microsoft.EntityFrameworkCore;
+using Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// 🔌 Configure DbContext with SQLite
 builder.Services.AddDbContext<LibraryDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// 🧩 Dependency Injection
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<BookService>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped<AuthorService>();
+
+// 🌐 Add services to the container.
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers()
     .AddJsonOptions(opt =>
     {
@@ -21,25 +33,28 @@ builder.Services.AddControllers()
         opt.JsonSerializerOptions.WriteIndented = true;
     });
 
-
-
+// 👷 Build the app
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+// 🧪 Middleware pipeline
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
+app.UseAuthorization();
+app.UseHttpsRedirection();
+
+app.MapControllers();
+
+// ✅ Seeding (optional, if you made SeedData class)
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
     db.Database.EnsureCreated();
     SeedData.Initialize(db);
 }
-app.MapControllers();
-
-app.UseHttpsRedirection();
 
 app.Run();
 
