@@ -23,6 +23,9 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<BookService>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<AuthorService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<CategoryService>();
+
 
 // 🌐 Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
