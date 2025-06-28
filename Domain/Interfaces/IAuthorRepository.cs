@@ -1,6 +1,8 @@
-namespace Domain.Entities
+namespace Domain.Interfaces
 {
-    public class IAuthorRepository
+    using Domain.Entities;
+
+    public interface IAuthorRepository
     {
         Task<IEnumerable<Author>> GetAllAsync();
         Task<Author?> GetByIdAsync(Guid id);

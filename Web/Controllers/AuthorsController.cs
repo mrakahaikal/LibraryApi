@@ -1,6 +1,12 @@
 namespace Web.Controllers
 {
-    public class AuthorController(AuthorService service) : ControllerBase
+    using Microsoft.AspNetCore.Mvc;
+    using Application.Services;
+    using Domain.Entities;
+
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthorsController(AuthorService service) : ControllerBase
     {
         private readonly AuthorService _service = service;
 

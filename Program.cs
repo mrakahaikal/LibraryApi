@@ -53,7 +53,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
     db.Database.EnsureCreated();
-    SeedData.Initialize(db);
+    // SeedData.Initialize(db);
 }
 
 app.Run();

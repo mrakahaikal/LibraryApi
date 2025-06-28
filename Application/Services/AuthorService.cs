@@ -1,5 +1,8 @@
 namespace Application.Services
 {
+    using Domain.Entities;
+    using Domain.Interfaces;
+
     public class AuthorService(IAuthorRepository repo)
     {
         private readonly IAuthorRepository _repo = repo;

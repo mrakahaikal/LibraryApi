@@ -1,6 +1,11 @@
 namespace Infrastructure.Repositories
 {
-    public class AuthorRepositories(LibraryDbContext context) : IAuthorRepositry
+    using Domain.Entities;
+    using Domain.Interfaces;
+    using Microsoft.EntityFrameworkCore;
+    using Infrastructure.Persistence;
+    
+    public class AuthorRepository(LibraryDbContext context) : IAuthorRepository
     {
         private readonly LibraryDbContext _context = context;
 
@@ -26,7 +31,7 @@ namespace Infrastructure.Repositories
             var author = await _context.Authors.FindAsync(id);
             if (author is not null)
             {
-                _context.Author.Remove(author);
+                _context.Authors.Remove(author);
                 await _context.SaveChangesAsync();
             }
         }
