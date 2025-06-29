@@ -30,13 +30,13 @@ Proyek ini adalah aplikasi backend manajemen perpustakaan internal yang dibangun
 
 ## 📂 Struktur Proyek
 
-├── Domain
-│ └── Entities, Enums, Interfaces
-├── Application
-│ └── DTOs, Services, Validation Logic
-├── Infrastructure
-│ └── EF Core DBContext, Repositories
-├── Web
+├── Domain  
+│ └── Entities, Enums, Interfaces  
+├── Application  
+│ └── DTOs, Services, Validation Logic  
+├── Infrastructure  
+│ └── EF Core DBContext, Repositories  
+├── Web  
 │ └── Controllers, Program.cs, Middleware
 
 ---
